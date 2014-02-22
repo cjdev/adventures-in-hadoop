@@ -8,7 +8,7 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>Assembly Descriptor for Hadoop Jobs</name>
+  <name>Hadoop Jobs Assemblies</name>
   <url>http://chrisalbright.github.io/advetures-in-hadoop/</url>
 
   <properties>
