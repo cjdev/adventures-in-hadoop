@@ -27,6 +27,7 @@
     <module>tf-idf-mr</module>
     <module>tf-idf-crunch</module>
     <module>hadoop-assembly</module>
+    <module>word-utilities</module>
   </modules>
 
   <build>
@@ -79,6 +80,12 @@
         <artifactId>hadoop-client</artifactId>
         <version>2.0.0-mr1-cdh4.3.1</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.9.5</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>junit</groupId>

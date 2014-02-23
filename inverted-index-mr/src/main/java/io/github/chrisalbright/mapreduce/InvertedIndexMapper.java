@@ -1,5 +1,6 @@
 package io.github.chrisalbright.mapreduce;
 
+import io.github.chrisalbright.utility.WordFunctions;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -11,16 +12,18 @@ import java.util.Locale;
 public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, Text> {
 
   @Override
-  protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+  protected void map(LongWritable key, Text line, Context context) throws IOException, InterruptedException {
     FileSplit inputSplit = (FileSplit) context.getInputSplit();
     String fileName = inputSplit.getPath().getName();
     Text fileNameOutput = new Text(fileName + ",1");
-    String line = value.toString();
-    String strippedLine = line.replaceAll("\\W", " ");
-    String[] tokens = strippedLine.split("\\s");
+    String lineString = line.toString();
+    Iterable<String> splitWords = WordFunctions.lineToWords(lineString);
+    Iterable<String> words = WordFunctions.lowercaseWords(splitWords, Locale.US);
 
-    for (String token : tokens) {
-      context.write(new Text(token.toLowerCase(Locale.US)), fileNameOutput);
+    for (String word : words) {
+      if (! word.isEmpty()){
+        context.write(new Text(word), fileNameOutput);
+      }
     }
 
   }

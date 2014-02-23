@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class InvertedIndexCrunchTest {
+public class InvertedIndexTest {
   @Test
   public void testInvertedIndex() {
   	assertTrue(true);

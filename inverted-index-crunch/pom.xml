@@ -25,7 +25,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>io.github.chrisalbright.InvertedIndexCrunch</mainClass>
+              <mainClass>io.github.chrisalbright.crunch.InvertedIndexDetailed</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -35,12 +35,21 @@
 
   <dependencies>
     <dependency>
+      <groupId>io.github.chrisalbright</groupId>
+      <artifactId>word-utilities</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.crunch</groupId>
       <artifactId>crunch-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
