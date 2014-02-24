@@ -24,7 +24,7 @@ a:not(:hover) {
   display: none;
   font-size: 48px;
   height: 800px;
-  padding: 20px 80px;
+  padding: 80px 80px;
   width: 1280px;
   -webkit-transform: translate3d(0,0,0);
 }
