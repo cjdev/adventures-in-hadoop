@@ -3,6 +3,7 @@ package io.github.chrisalbright.crunch;
 import com.google.common.collect.Iterables;
 import org.apache.crunch.Pair;
 import org.apache.crunch.impl.mem.emit.InMemoryEmitter;
+import org.apache.crunch.impl.mr.run.CrunchInputSplit;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.MapContext;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
@@ -53,12 +54,14 @@ public class InvertedIndexFunctionsTest {
     @Test
     public void testAppendDocumentName() {
         MapContext context = mock(MapContext.class);
-        FileSplit split = mock(FileSplit.class);
+        CrunchInputSplit split = mock(CrunchInputSplit.class);
+        FileSplit fileSplit = mock(FileSplit.class);
         String line = "the quick brown fox jumps over the lazy dog";
         String fileName = "mockfile.txt";
         String pathString = "/tmp/" + fileName;
 
-        when(split.getPath()).thenReturn(new Path(pathString));
+        when(fileSplit.getPath()).thenReturn(new Path(pathString));
+        when(split.getInputSplit()).thenReturn(fileSplit);
         when(context.getInputSplit()).thenReturn(split);
 
         InMemoryEmitter<Pair<String, String>> emitter =

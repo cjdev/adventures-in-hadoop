@@ -8,6 +8,7 @@ import org.apache.crunch.io.To;
 import org.apache.crunch.lib.PTables;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 import java.io.Serializable;
 
@@ -16,7 +17,8 @@ import static org.apache.crunch.types.avro.Avros.*;
 public class InvertedIndex extends Configured implements Tool, Serializable {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        ToolRunner.run(new InvertedIndex(), args);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class InvertedIndex extends Configured implements Tool, Serializable {
             .groupByKey()
             .combineValues(Aggregators.STRING_CONCAT(",", true));
 
-        output.write(target);
+        output.write(target, Target.WriteMode.OVERWRITE);
 
         PipelineResult result = pipeline.run();
 

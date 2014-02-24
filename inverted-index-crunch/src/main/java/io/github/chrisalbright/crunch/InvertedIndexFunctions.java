@@ -3,6 +3,8 @@ package io.github.chrisalbright.crunch;
 import com.google.common.collect.Maps;
 import io.github.chrisalbright.utility.WordFunctions;
 import org.apache.crunch.*;
+import org.apache.crunch.impl.mr.run.CrunchInputSplit;
+import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.MapContext;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
@@ -40,25 +42,27 @@ public final class InvertedIndexFunctions {
 
     public static DoFn<String, Pair<String, String>> linesWithDocumentName =
       new DoFn<String, Pair<String, String>>() {
-          private MapContext context;
+
+          String inputFile = "";
 
           @Override
           public void initialize() {
-              context = (MapContext) getContext();
+              if (getContext() instanceof MapContext) {
+
+                  InputSplit split = ((MapContext)getContext()).getInputSplit();
+                  if (split instanceof CrunchInputSplit) {
+
+                      InputSplit inputSplit = ((CrunchInputSplit) split).getInputSplit();
+                      if (inputSplit instanceof FileSplit) {
+                          inputFile = ((FileSplit)inputSplit).getPath().getName();
+                      }
+                  }
+              }
           }
 
           @Override
           public void process(String input, Emitter<Pair<String, String>> emitter) {
-              String inputFile = getInputFileName();
               emitter.emit(new Pair<String, String>(input, inputFile));
-          }
-
-          private String getInputFileName() {
-              return getInputSplit().getPath().getName();
-          }
-
-          private FileSplit getInputSplit() {
-              return (FileSplit) context.getInputSplit();
           }
 
       };

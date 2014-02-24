@@ -2,6 +2,7 @@ package io.github.chrisalbright.utility;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -14,23 +15,40 @@ public final class WordFunctions {
     public static Iterable<String> lineToWords(final String line) {
         Preconditions.checkArgument(line != null, "Must not pass a null string");
         assert line != null;
-        return Lists.newArrayList(line.split("\\s+"));
+        return lowercaseWords(filterAllNumbers(filterEmptyWords(Lists.newArrayList(trimNonWordCharacters(line).split("\\s+")))));
     }
 
+    public static String trimNonWordCharacters(final String word) {
+        String strippedWord = word.replaceAll("[^a-zA-Z0-9]+", " ");
+        return strippedWord;
+    }
     public static Iterable<String> trimNonWordCharacters(final Iterable<String> wordList) {
         Preconditions.checkArgument(wordList != null, "Must not pass a null wordlist");
         return Iterables.transform(wordList, new Function<String, String>() {
             @Override
-            public String apply(String s) {
-                char[] chars = s.toCharArray();
-                for (int i = 0; i < chars.length; i++) {
-                    if (Character.isAlphabetic(chars[i]) ||
-                              Character.isDigit(chars[i])) {
-                        String strippedLine = s.replaceAll("[^a-zA-Z]+", " ");
-                        return strippedLine;
-                    }
-                }
-                return "";
+            public String apply(String word) {
+                return trimNonWordCharacters(word);
+            }
+        });
+    }
+
+    public static Iterable<String> filterAllNumbers(final Iterable<String> wordList) {
+        Preconditions.checkArgument(wordList != null, "Must not pass a null wordlist");
+        return Iterables.filter(wordList, new Predicate<String>() {
+            @Override
+            public boolean apply(String s) {
+                return ! s.matches("[0-9]+");
+            }
+        });
+
+    }
+
+    public static Iterable<String> filterEmptyWords(final Iterable<String> wordList) {
+        Preconditions.checkArgument(wordList != null, "Must not pass a null wordlist");
+        return Iterables.filter(wordList, new Predicate<String>() {
+            @Override
+            public boolean apply(String s) {
+                return null != s && !s.isEmpty();
             }
         });
     }

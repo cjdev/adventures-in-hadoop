@@ -7,24 +7,24 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
 import java.io.IOException;
-import java.util.Locale;
 
 public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, Text> {
 
-  @Override
-  protected void map(LongWritable key, Text line, Context context) throws IOException, InterruptedException {
-    FileSplit inputSplit = (FileSplit) context.getInputSplit();
-    String fileName = inputSplit.getPath().getName();
-    Text fileNameOutput = new Text(fileName + ",1");
-    String lineString = line.toString();
-    Iterable<String> splitWords = WordFunctions.lineToWords(lineString);
-    Iterable<String> words = WordFunctions.lowercaseWords(splitWords, Locale.US);
+    @Override
+    protected void map(LongWritable key, Text line, Context context) throws IOException, InterruptedException {
+        FileSplit inputSplit = (FileSplit) context.getInputSplit();
+        String fileName = inputSplit.getPath().getName();
+        Text fileNameOutput = new Text(fileName + ",1");
+        String lineString = line.toString();
+        Iterable<String> splitWords = WordFunctions.lineToWords(lineString);
+        Iterable<String> trimmedWords = WordFunctions.trimNonWordCharacters(splitWords);
+        Iterable<String> words = WordFunctions.lowercaseWords(trimmedWords);
 
-    for (String word : words) {
-      if (! word.isEmpty()){
-        context.write(new Text(word), fileNameOutput);
-      }
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                context.write(new Text(word), fileNameOutput);
+            }
+        }
+
     }
-
-  }
 }
