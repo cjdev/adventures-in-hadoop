@@ -3,7 +3,6 @@ package io.github.chrisalbright.crunch;
 import com.google.common.collect.Maps;
 import io.github.chrisalbright.utility.WordFunctions;
 import org.apache.crunch.*;
-import org.apache.crunch.impl.mr.run.CrunchInputSplit;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.MapContext;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
@@ -47,17 +46,17 @@ public final class InvertedIndexFunctions {
 
           @Override
           public void initialize() {
-              if (getContext() instanceof MapContext) {
-
-                  InputSplit split = ((MapContext)getContext()).getInputSplit();
-                  if (split instanceof CrunchInputSplit) {
-
-                      InputSplit inputSplit = ((CrunchInputSplit) split).getInputSplit();
-                      if (inputSplit instanceof FileSplit) {
-                          inputFile = ((FileSplit)inputSplit).getPath().getName();
-                      }
-                  }
-              }
+//              if (getContext() instanceof MapContext) {
+//
+//                  InputSplit split = ((MapContext)getContext()).getInputSplit();
+//                  if (split instanceof CrunchInputSplit) {
+//
+//                      InputSplit inputSplit = ((CrunchInputSplit) split).getInputSplit();
+//                      if (inputSplit instanceof FileSplit) {
+//                          inputFile = ((FileSplit)inputSplit).getPath().getName();
+//                      }
+//                  }
+//              }
           }
 
           @Override
