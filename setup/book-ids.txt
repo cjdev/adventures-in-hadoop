@@ -1,9 +1,21 @@
 205	Walden
-71 Civil Disobedience
-1022 Walking
-4232 A Week on the Concord and Merrimack Rivers
-34392 Cape Cod
-34990 Canoeing in the Wilderness
-9846 Excursions
-2567 A Plea for Captain John Brown
-4066 Wild Apples
+71	Civil Disobedience
+1022	Walking
+4232	A Week on the Concord and Merrimack Rivers
+34392	Cape Cod
+34990	Canoeing in the Wilderness
+9846	Excursions
+2567	A Plea for Captain John Brown
+4066	Wild Apples
+44987	The Pioneer Trail
+44984	The Mystery Girl
+44892	Lady Lilith
+44987	The Complete Poems of Sir John Davies Vol1
+44988	The Complete Poems of Sir John Davies Vol2
+7937	Journal of an African Cruiser
+7235	The Bride of Fort Edward
+19734	The Fairy Book
+12264	Father Payne
+16399	A Winter Tour in Southe Africa
+43204	The Motor Boys in Mexico
+
